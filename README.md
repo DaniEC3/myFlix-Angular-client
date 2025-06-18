@@ -1,59 +1,92 @@
-# MyFlixAngularClient
+# 🎬 myFlix Angular Client
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.2.
+This project is a **single-page web application** built with Angular that allows users to browse movies, register an account, update their profile, and manage a list of favorite movies. It communicates with a RESTful API built with Node.js and hosted on Heroku.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📦 Features
 
-```bash
-ng serve
+- ✅ User registration and login
+- ✅ View all movies from the database
+- ✅ Filter movies by genre or director
+- ✅ Add and remove movies from favorites
+- ✅ Edit user profile
+- ✅ Delete user account
+- ✅ Protected routes using token-based authentication
+- ✅ Styled with Angular Material
+
+---
+
+## 🚀 Technologies Used
+
+- Angular 15+
+- TypeScript
+- Angular Material
+- RxJS
+- Angular CLI
+- REST API (Node.js + Express + MongoDB)
+
+---
+
+## 🌐 Live Demo
+
+Frontend: [https://myflixsiteapp.netlify.app](https://myflixsiteapp.netlify.app)  
+Backend API: [https://movies-my-flix-app-60bc918eee2b.herokuapp.com/](https://movies-my-flix-app-60bc918eee2b.herokuapp.com/)
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── components/         # UI components
+│   ├── services/           # API service (FetchApiDataService)
+│   ├── interfaces/         # TypeScript interfaces
+│   ├── app.module.ts       # App module config
+│   └── app.component.ts    # Root component
+├── assets/
+└── index.html
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🔧 Setup Instructions
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/myFlix-Angular-client.git
+   cd myFlix-Angular-client
+   ```
 
-```bash
-ng generate component component-name
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. **Run the application**
+   ```bash
+   ng serve
+   ```
 
-```bash
-ng generate --help
-```
+4. Open your browser and go to `http://localhost:4200`
 
-## Building
+---
 
-To build the project run:
+## 🛡️ Authentication
 
-```bash
-ng build
-```
+- Token-based authentication using `Bearer <token>` headers.
+- Tokens are stored in `localStorage`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## ✍️ Author
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Daniel** – Web Developer  
+- Originally from **Colombia**, currently based in the **U.S.**
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## 📜 License
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is part of the CareerFoundry Full-Stack Web Development Program. Feel free to reuse for educational purposes.
