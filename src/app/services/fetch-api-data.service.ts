@@ -19,7 +19,8 @@ export class FetchApiDataService {
   constructor(private http: HttpClient) { }
 
   // ✅ Registers a new user
-  userRegistration(userDetails: User): Observable<User> {
+
+  userRegistration(userDetails: Partial<User>): Observable<User> {
     console.log('Registering user:', userDetails);
     return this.http.post<User>(apiUrl + 'users/create', userDetails
     ).pipe(
@@ -49,6 +50,7 @@ export class FetchApiDataService {
   }
 
   // ✅ Get directors
+
   getDirectors(): Observable<Director[]> {
     const headers = this.getAuthHeaders();
     if (!headers) {
@@ -60,6 +62,7 @@ export class FetchApiDataService {
   }
 
   // ✅ Get director by name
+
   getDirectorByName(name: string): Observable<Director> {
     const headers = this.getAuthHeaders();
     if (!headers) {
@@ -71,6 +74,7 @@ export class FetchApiDataService {
   }
 
   // ✅ Get genres
+
   getGenres(): Observable<Genre[]> {
     const headers = this.getAuthHeaders();
     if (!headers) {
@@ -82,6 +86,7 @@ export class FetchApiDataService {
   }
 
   // ✅ Get genre by name
+
   getGenreByName(name: string): Observable<Genre> {
     const headers = this.getAuthHeaders();
     if (!headers) {
@@ -93,6 +98,7 @@ export class FetchApiDataService {
   }
 
   // ✅ Get users
+
   getUsers(): Observable<User[]> {
     const headers = this.getAuthHeaders();
     if (!headers) {
@@ -163,7 +169,7 @@ export class FetchApiDataService {
     )
   }
 
-  // ✅ Generic error handler
+  // ✅ Headers
 
   private getAuthHeaders(): HttpHeaders | null {
     const token = localStorage.getItem('token');
@@ -171,6 +177,8 @@ export class FetchApiDataService {
       ? new HttpHeaders({ Authorization: 'Bearer ' + token })
       : null;
   }
+
+  // ✅ Generic error handler
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {

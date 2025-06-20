@@ -1,0 +1,7 @@
+<!-- <input type="text" [formControl]="userNameControl"> -->
+<form [formGroup]="loginForm">
+  <input type="text" formControlName="userName" />
+  <button type="submit">SUBMIT</button>
+</form>
+
+<p>hello! {{ loginForm.get('userName')?.value }}</p>
