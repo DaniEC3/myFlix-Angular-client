@@ -1,0 +1,36 @@
+@use '../../styles/variables' as *;
+
+.register-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black ;
+
+  .register-mat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: black;
+    color: $primary-color;
+
+    .header-title{
+      font-family: $headers-font;
+    }
+    
+
+    .mat-content{
+      
+      .mat-form{
+        display: flex;
+        flex-direction: column;
+        margin: 1.2em;
+
+      mat-form-field {
+        width: 100%;
+      }
+      }
+    }
+  }
+}
+

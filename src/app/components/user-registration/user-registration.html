@@ -1,75 +1,36 @@
-<mat-card>
-    <mat-card-header>
-      <mat-card-title>Sign Up!</mat-card-title>
+<div class="register-wrapper">
+  <mat-card class="register-mat">
+    <mat-card-header class="header-mat">
+      <mat-card-title class="header-title">Sign Up!</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <form>
+    <mat-card-content class="mat-content">
+      <form class="mat-form">
         <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userDetails.userName"
-            placeholder="Username"
-            type="text"
-            name="Username"
-            required
-          >
-          </mat-form-field>
-          <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userDetails.password"
-            type = "password"
-            placeholder="Password"
-            name="Password"
-            required
-          >
+          <input matInput [(ngModel)]="userDetails.userName" placeholder="Username" type="text" name="Username"
+            required>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userDetails.email"
-            type = "email"
-            placeholder="Email"
-            name="Email"
-            required
-          >
+          <input matInput [(ngModel)]="userDetails.password" type="password" placeholder="Password" name="Password"
+            required>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userDetails.birthDay"
-            type = "date"
-            placeholder="Birthday"  
-            name="Birthday"
-          >
+          <input matInput [(ngModel)]="userDetails.email" type="email" placeholder="Email" name="Email" required>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userDetails.first_Name"
-            type = "text"
-            placeholder="First Name"  
-            name="First Name"
-          >
+          <input matInput [(ngModel)]="userDetails.birthDay" type="date" placeholder="Birthday" name="Birthday">
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userDetails.last_Name"
-            type = "text"
-            placeholder="Last Name"  
-            name="Last Name"
-          >
+          <input matInput [(ngModel)]="userDetails.first_Name" type="text" placeholder="First Name" name="First Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="userDetails.last_Name" type="text" placeholder="Last Name" name="Last Name">
         </mat-form-field>
       </form>
     </mat-card-content>
     <mat-card-actions>
-        <button
-          mat-raised-button
-          (click)="registerUser()"
-          color="primary"
-        >
-          Sign Up
-        </button>
+      <button mat-raised-button (click)="registerUser()" color="primary">
+        Sign Up
+      </button>
     </mat-card-actions>
   </mat-card>
+</div>
