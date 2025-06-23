@@ -30,8 +30,8 @@ export class FetchApiDataService {
 
   // ✅ User Login
 
-  userLogin(credentails: LoginCredentials): Observable<any> {
-    return this.http.post<LoginCredentials>(apiUrl + 'login', credentails)
+  userLogin(credentials: LoginCredentials): Observable<any> {
+    return this.http.post<LoginCredentials>(apiUrl + 'login', credentials)
       .pipe(
         catchError(this.handleError)
       )

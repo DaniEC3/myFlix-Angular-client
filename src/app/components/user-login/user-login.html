@@ -1,7 +1,16 @@
-<!-- <input type="text" [formControl]="userNameControl"> -->
-<form [formGroup]="loginForm">
-  <input type="text" formControlName="userName" />
-  <button type="submit">SUBMIT</button>
-</form>
+<div class="loginContainer">
+  <form class="loginForm">
+    <div class="FormText">Username:</div>
+    <input type="text" class="formEntry" placeholder="Username" [(ngModel)]="credentials.userName" name="userName"/>
+    <div class="FormText">Password:</div>
+    <div class="password-wrapper">
 
-<p>hello! {{ loginForm.get('userName')?.value }}</p>
+      <input [type]="showpassword ? 'text' : 'password'" class="formEntry" placeholder="Password"
+        [(ngModel)]='credentials.password' name="password" />
+      <button type="button" (click)="togglePasswordVisibility()">
+        {{showpassword ? 'Hide Password' : 'Show Password'}}
+      </button>
+    </div>
+    <button type="submit" class="formButton" (click)="loginUser()">SUBMIT</button>
+  </form>
+</div>
