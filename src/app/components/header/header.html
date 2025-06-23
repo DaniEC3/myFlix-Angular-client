@@ -1,10 +1,11 @@
 <div class="header">
   <nav class="nav-bar">
-    <div class="Page_Title">MyFlix</div>
-    <div>
-      <a mat-raised-button color="primary" routerLink="/login">Go to Login</a>
-      <a routerLink="/home">Go to home</a>
-      <a routerLink="/registration">Go to registration</a>
+    <a class="nav-title" routerLink="/home">MyFlixAngular</a>
+    <button class="nav-toggle" (click) = "toggleMenu()">☰</button>
+    <div class= "nav-links" [class.open] = 'menuOpen'>
+      <a mat-raised-button color="primary" routerLink="/login">Login</a>
+      <a routerLink="/home">Home</a>
+      <a routerLink="/registration">SignUp</a>
     </div>
   </nav>
 </div>
