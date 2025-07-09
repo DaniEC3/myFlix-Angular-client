@@ -18,7 +18,12 @@
 
     .FormText {
       color: $primary-light;
+
+      &:hover {
+        color: $accent-color;
+      }
     }
+
 
 
     .formEntry {
@@ -35,11 +40,13 @@
 
       &:focus {
         border-color: $primary-color;
-        box-shadow: 0 0 0 2px $primary-shadow;
-        border: 2px solid $primary-border;
+        box-shadow: 0 0 0 2px $accent-shadow;
+        border: 2px solid $accent-color;
       }
 
+
     }
+
 
     .formButton {
       border: 2px solid;
@@ -75,13 +82,24 @@
 
     .password-wrapper {
       display: flex;
-      align-items: stretch;
+      // align-items: stretch;
       gap: 0.5rem;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-      .formEntry {
-        height: 40px;
 
+      .icon-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        color: $primary-light; // or #ff4081
+        font-size: 20px;
+
+        &:hover {
+          color: $accent-color-dark; // Optional darker pink
+        }
       }
 
       button {
@@ -92,9 +110,9 @@
         cursor: pointer;
         padding: 0.25rem 0.5rem;
         font-family: $body-font;
-        
+
       }
-      
+
     }
   }
 
