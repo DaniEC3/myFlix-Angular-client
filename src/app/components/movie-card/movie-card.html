@@ -1,4 +1,4 @@
-<div ngIf="token">
+<ng-container *ngIf="token">
   <div class="movie-grid">
     <div class="movie-grid-cards">
       <mat-card *ngFor="let movie of movies" class="movies-card">
@@ -25,4 +25,4 @@
       </mat-card>
     </div>
   </div>
-</div>
+</ng-container>

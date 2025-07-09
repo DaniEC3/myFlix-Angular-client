@@ -35,7 +35,6 @@ export class MovieCardComponent implements OnInit {
 
     this.authService.token$.subscribe(token => {
       this.token = token;
-      console.log(this.token)
     })
 
     this.getGenres();
@@ -51,7 +50,6 @@ export class MovieCardComponent implements OnInit {
       .subscribe({  //	This block runs when the data is successfully received
         next: (genres: Genre[]) => { // 	This block runs when the data is successfully received
           this.genres = genres;
-          console.log(genres);
         },
         error: (err) => {
           console.log('Error fetching Genres:', err);
@@ -64,7 +62,6 @@ export class MovieCardComponent implements OnInit {
       .subscribe({  //	This block runs when the data is successfully received
         next: (movies: Movie[]) => { // 	This block runs when the data is successfully received
           this.movies = movies;
-          console.log(movies);
         },
         error: (err) => {
           console.log('Error fetching Movies:', err);
