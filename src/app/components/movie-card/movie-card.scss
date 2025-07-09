@@ -110,6 +110,11 @@
             align-items: stretch;
             gap: 0.5rem;
           }
+          mat-icon {
+            &:hover{
+              cursor: pointer;
+            }
+          }
         }
 
         .action-button {

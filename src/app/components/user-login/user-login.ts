@@ -8,12 +8,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
-
-
 // This import brings in the API calls we created in 6.2
 import { FetchApiDataService } from '../../services/fetch-api-data.service';
 
 import { LoginCredentials } from '../../Interfaces/login';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-login',
@@ -42,7 +41,8 @@ export class UserLoginComponent implements OnInit {
   constructor(
     public fetchApiData: FetchApiDataService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +59,8 @@ export class UserLoginComponent implements OnInit {
     this.fetchApiData.userLogin(this.credentials).subscribe({
       next: (result) => {
         localStorage.setItem('token',result.token);
-        localStorage.setItem('user',result.user.userName)
+        
+        this.authService.setToken(result.token)
 
         this.snackBar.open(`Welcome back, ${result.user.userName}!`, 'OK', {
           duration: 2000

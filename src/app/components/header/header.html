@@ -1,11 +1,21 @@
 <div class="header">
   <nav class="nav-bar">
-    <a class="nav-title" routerLink="/home">MyFlixAngular</a>
-    <button class="nav-toggle" (click) = "toggleMenu()">☰</button>
-    <div class= "nav-links" [class.open] = 'menuOpen'>
-      <a mat-raised-button color="primary" routerLink="/login">Login</a>
-      <!-- <a routerLink="/home">Home</a> -->
-      <a routerLink="/registration">SignUp</a>
+    <ng-container [ngSwitch]="!!token">
+      <a *ngSwitchCase="false" class="nav-title" routerLink="/login">MyFlixAngular</a>
+      <a *ngSwitchCase="true" class="nav-title" routerLink="/home">MyFlixAngular</a>
+    </ng-container>
+    <button class="nav-toggle" (click)="toggleMenu()">☰</button>
+    <div class="nav-links" [class.open]='menuOpen'>
+      <ng-container *ngIf="!token">
+        <a routerLink="/login">Login</a>
+        <a routerLink="/registration">SignUp</a>
+      </ng-container>
+      <ng-container *ngIf="token">
+        <a routerLink="/profile">Profile</a>
+        <a routerLink="/genre">Genres</a>
+        <button color="accent" (click)="logout()">Logout</button>
+      </ng-container>
+
     </div>
   </nav>
 </div>

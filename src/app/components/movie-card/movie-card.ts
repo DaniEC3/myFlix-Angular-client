@@ -3,9 +3,12 @@ import { FetchApiDataService } from '../../services/fetch-api-data.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { Movie } from '../../Interfaces/movie';
 import { Genre } from '../../Interfaces/genre';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-movie-card',
@@ -13,7 +16,8 @@ import { Genre } from '../../Interfaces/genre';
   imports: [
     CommonModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './movie-card.html',
   styleUrls: ['./movie-card.scss']
@@ -22,9 +26,17 @@ export class MovieCardComponent implements OnInit {
 
   constructor(
     public fetchApiData: FetchApiDataService,
+    private authService: AuthService
   ) { }
 
+  token: string | null = null;
+
   ngOnInit(): void {
+
+    this.authService.token$.subscribe(token => {
+      this.token = token;
+      console.log(this.token)
+    })
 
     this.getGenres();
     this.getMovies();
@@ -33,6 +45,7 @@ export class MovieCardComponent implements OnInit {
   movies: Movie[] = [];
   genres: Genre[] = [];
 
+  
   getGenres(): void {
     this.fetchApiData.getGenres() //	Returns an Observable that will emit the list of movies when the API responds
       .subscribe({  //	This block runs when the data is successfully received
