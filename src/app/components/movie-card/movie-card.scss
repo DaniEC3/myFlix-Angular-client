@@ -1,0 +1,166 @@
+@use '../../styles/variables' as *;
+
+.movie-grid {
+  display: flex;
+  justify-content: center;
+
+  .movie-grid-cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px;
+    margin: 10px;
+    justify-content: center;
+    max-width: 60%;
+    align-items: center;
+
+    .movies-card {
+      display: flex;
+      padding: 10px;
+      margin: 10px;
+      max-width: 30%;
+      border: 1px solid $primary-dark;
+      max-height: 1000px;
+      background-color: $movie-card-bg;
+      justify-content: center;
+      align-items: center;
+      color: $primary-color;
+
+      &:hover {
+        animation: bounce 0.8s;
+        box-shadow: 8px 0px 20px $primary-shadow;
+        background-color: $movie-card-bg-hover;
+        border: 2px solid $accent-color-dark;
+        color: $accent-color;
+      }
+
+      // Header
+
+      .content-wrapper {
+        width: 90%;
+
+        .header {
+
+          .title {
+            height: 60px;
+            max-height: 60px;
+            overflow: auto;
+
+            &:hover {
+              cursor: pointer;
+              text-shadow: 0 0 6px $accent-shadow;
+              text-decoration: underline;
+            }
+          }
+
+          .sub-title {
+            padding: 5px;
+            color: white;
+            font-family: $body-font;
+
+            &:hover {
+              cursor: pointer;
+              text-shadow: 0 0 6px $accent-shadow;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .description {
+          font-family: $body-font;
+          display: -webkit-box;
+          display: box; // 💡 Old spec (some older browsers)
+          -webkit-line-clamp: 4;
+          line-clamp: 4; // ✅ Standard version
+          -webkit-box-orient: vertical;
+          box-orient: vertical; // 💡 Old spec again
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: white;
+
+        }
+
+        .action-button {
+          font-family: $body-font;
+          font-weight: 600;
+          border: 2px solid transparent;
+          border-radius: 8px;
+          padding: 6px 16px;
+          font-size: 0.9rem;
+          transition:
+            background-color 0.3s ease,
+            color 0.3s ease,
+            transform 0.2s ease,
+            box-shadow 0.3s ease;
+          color: white;
+
+          &:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+          }
+        }
+
+        .primary-button {
+          background-color: $primary-color;
+          border-color: $primary-dark;
+          box-shadow: 0 4px 8px $primary-shadow;
+
+          &:hover {
+            background-color: $primary-dark;
+            box-shadow: 0 6px 16px $primary-shadow;
+          }
+        }
+
+        .accent-button {
+          background-color: $accent-color;
+          border-color: $accent-color-dark;
+          box-shadow: 0 4px 8px $accent-shadow;
+
+          &:hover {
+            background-color: $accent-color-dark;
+            box-shadow: 0 6px 16px $accent-shadow;
+          }
+        }
+      }
+    }
+
+
+
+    @media (max-width: 992px) {
+      .movies-card {
+        max-width: 46%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .movies-card {
+        max-width: 90%;
+        align-items: center;
+      }
+    }
+
+    img {
+      width: 100%;
+      cursor: pointer;
+
+    }
+
+    p {
+      height: 100px;
+
+      overflow: auto;
+    }
+  }
+
+  @keyframes bounce {
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.02);
+    }
+  }
+}

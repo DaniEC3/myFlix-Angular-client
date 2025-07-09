@@ -1,14 +1,17 @@
 <div class="loginContainer">
   <form class="loginForm">
     <div class="FormText">Username:</div>
-    <input type="text" class="formEntry" placeholder="Username" [(ngModel)]="credentials.userName" name="userName"/>
+    <input type="text" class="formEntry" placeholder="Username" [(ngModel)]="credentials.userName" name="userName" />
     <div class="FormText">Password:</div>
     <div class="password-wrapper">
 
       <input [type]="showpassword ? 'text' : 'password'" class="formEntry" placeholder="Password"
         [(ngModel)]='credentials.password' name="password" />
-      <button type="button" (click)="togglePasswordVisibility()">
-        {{showpassword ? 'Hide Password' : 'Show Password'}}
+      <button type="button" (click)="togglePasswordVisibility()" class="icon-button"
+        aria-label="Toggle password visibility">
+        <span class="material-icons">
+          {{ showpassword ? 'visibility_off' : 'visibility' }}
+        </span>
       </button>
     </div>
     <button type="submit" class="formButton" (click)="loginUser()">SUBMIT</button>

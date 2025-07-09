@@ -2,18 +2,22 @@ $headers-font: 'Audiowide', sans-serif;
 $body-font: 'Montserrat', sans-serif;
 $placeholder-font: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-// Accent hover color
-$accent-color: #ff4081; // Vibrant pink
-$accent-color-dark: #e91e63; // Slightly darker for borders
-$accent-shadow: rgba(255, 64, 129, 0.4); // For glowing shadows
+// 🔷 PRIMARY — Bright Futuristic Blue
+$primary-color:            #00BFFF;   // DeepSkyBlue
+$primary-light:            #66dfff;
+$primary-bg-light:         #e3f7ff;
+$primary-very-light:       #f2fcff;
+$primary-dark:             #0099cc;
+$primary-very-dark:        #006d99;
+$primary-shadow:           rgba(0, 191, 255, 0.4);
+$primary-focus-outline:    rgba(0, 191, 255, 0.2);
+$primary-border:           #99e3ff;
+
+// 💖 ACCENT — Bold MyFlix pink
+$accent-color: #ff4081;               // Vibrant pink
+$accent-color-dark: #e91e63;          // Slightly deeper pink
+$accent-shadow: rgba(255, 64, 129, 0.4); // Pink glow for hover/focus
 
 
-$primary-color:            #00BCD4;
-$primary-light:            #B2EBF2;
-$primary-bg-light:         #E0F7FA;
-$primary-very-light:       #F1FDFF;
-$primary-dark:             #008BA3;
-$primary-very-dark:        #006978;
-$primary-shadow:           rgba(0, 188, 212, 0.4);
-$primary-focus-outline:    rgba(0, 188, 212, 0.2);
-$primary-border:           #b0e0e6;
+$movie-card-bg: rgba(0, 191, 255, 0.1); // translucent primary blue
+$movie-card-bg-hover: rgba(0, 191, 255, 0.2);
