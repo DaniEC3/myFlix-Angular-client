@@ -4,9 +4,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black ;
+  background-color: black;
 
-  .register-mat{
+  .register-mat {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,23 +14,38 @@
     background-color: black;
     color: $primary-color;
 
-    .header-title{
+    .header-title {
       font-family: $headers-font;
     }
-    
 
-    .mat-content{
-      
-      .mat-form{
+
+    .mat-content {
+
+      .mat-form {
         display: flex;
         flex-direction: column;
         margin: 1.2em;
 
-      mat-form-field {
-        width: 100%;
-      }
+        mat-form-field {
+          width: 100%;
+          font-family: $body-font;
+          // height: 40px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          border-color: gray;
+          border-radius: 10px;
+          outline: none;
+          background-color: black;
+          color: $primary-light;
+          transition: border 0.3s ease, box-shadow 0.3s ease;
+
+          &:focus {
+            border-color: $primary-color;
+            box-shadow: 0 0 0 2px $accent-shadow;
+            border: 2px solid $accent-color;
+          }
+        }
       }
     }
   }
 }
-
