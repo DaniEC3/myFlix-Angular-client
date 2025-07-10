@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { LogoutConfirmationDialog } from '../../dialogs/logout-confirmation.dialog';
+import { SearchService } from '../../services/search.service';
 
 
 
@@ -28,12 +29,14 @@ import { LogoutConfirmationDialog } from '../../dialogs/logout-confirmation.dial
 export class HeaderComponent {
   menuOpen = false;
 
-  token: string | null = null;
+  @Input() token: string | null = null;
+  @Output() searchChanged = new EventEmitter<string>();
 
   constructor(private router: Router,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private searchService: SearchService
 
   ) { }
 
@@ -59,5 +62,10 @@ export class HeaderComponent {
         });
       }
     });
+  }
+
+  onSearchChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchService.setSearchTerm(input.value.toLowerCase());
   }
 }

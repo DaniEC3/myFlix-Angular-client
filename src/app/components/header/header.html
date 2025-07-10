@@ -13,6 +13,9 @@
       <ng-container *ngIf="token">
         <a routerLink="/profile">Profile</a>
         <a routerLink="/genre">Genres</a>
+        <div class="search-container">
+          <input type="text" placeholder="Search movies..." (input)="onSearchChange($event)" />
+        </div>
         <button (click)="logout()">Logout</button>
       </ng-container>
 
