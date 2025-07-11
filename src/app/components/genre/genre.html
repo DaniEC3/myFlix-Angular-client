@@ -1,1 +1,10 @@
-<p>genre works!</p>
+<div class="genre-container">
+  <div *ngIf="loading"  class="loading">Loading Content...</div>
+  <mat-card 
+  (click)="openGenreModal(genre)"
+   class="genre-card" *ngFor="let genre of allGenres" [ngStyle]="{ 'background-image': 'url(' + getGenreImage(genre._id) + ')' }">
+    <div class="overlay">
+      <h2>{{ genre.name }}</h2>
+    </div>
+  </mat-card>
+</div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { NgIf, NgSwitch, NgSwitchCase, } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,7 +17,6 @@ import { SearchService } from '../../services/search.service';
     NgIf,
     NgSwitch,
     NgSwitchCase,
-    NgSwitchDefault,
     MatDialogModule,
     RouterModule,
     MatButtonModule,

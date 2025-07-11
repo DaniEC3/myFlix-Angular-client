@@ -38,6 +38,7 @@ export class MovieCardComponent implements OnInit {
   allMovies: Movie[] = [];
   filteredMovies: Movie[] = [];
   genres: Genre[] = [];
+  loading: Boolean = true;
   private searchSub!: Subscription;
 
   ngOnInit(): void {
@@ -58,6 +59,8 @@ export class MovieCardComponent implements OnInit {
   ngOnDestroy(): void {
     this.searchSub?.unsubscribe(); // clean up
   }
+  
+
 
   getGenres(): void {
     this.fetchApiData.getGenres() //	Returns an Observable that will emit the list of movies when the API responds
@@ -77,6 +80,7 @@ export class MovieCardComponent implements OnInit {
         next: (movies: Movie[]) => { // 	This block runs when the data is successfully received
           this.allMovies = movies;
           this.filteredMovies = movies;
+          this.loading = false;
         },
         error: (err) => {
           console.log('Error fetching Movies:', err);

@@ -1,0 +1,22 @@
+<mat-card class="mat-container">
+  <mat-card-header class="mat-header">
+    <mat-card-title>{{ data.genre.name }}</mat-card-title>
+    <mat-card-subtitle>{{data.genre.audience}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="mat-description">
+    <p>{{ data.genre.description }}</p>
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-card-content class="mat-similar-movies">
+      <h3>Movies in this genre:</h3>
+      <ul class="similar-movies-container">
+        <li *ngFor="let movie of filteredMovies" class="similar-movie">
+          <img [src] = "movie.imagePath" [alt] = "movie.name" class="movie-image">
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card-footer>
+  <mat-card-actions>
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-card-actions>
+</mat-card>

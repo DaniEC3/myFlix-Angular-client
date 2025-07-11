@@ -1,0 +1,51 @@
+@use '../../styles/variables' as *;
+
+.mat-container {
+  font-family: $body-font;
+  display: flex;
+  flex-direction: column;
+  background-color: none;
+
+  .mat-header {
+    font-family: $headers-font;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .mat-similar-movies {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+
+    .similar-movies-container {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      overflow-x: auto;
+      white-space: nowrap; // ✅ prevent wrapping
+      max-width: 100%; // ✅ limit to card width
+      scroll-behavior: smooth; // optional for nicer UX
+
+
+      .similar-movie {
+        flex: 0 0 auto;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        width: 50%;
+        min-width: none;
+        .movie-image{
+          width: 100%;
+          
+        }
+      }
+    }
+  }
+
+
+}

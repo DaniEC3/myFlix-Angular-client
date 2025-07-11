@@ -1,5 +1,6 @@
 <ng-container *ngIf="token">
   <div class="movie-grid">
+    <div *ngIf="loading">Loading Content...</div>
     <div class="movie-grid-cards">
       <mat-card *ngFor="let movie of filteredMovies" class="movies-card">
         <div class="img-wrapper">
