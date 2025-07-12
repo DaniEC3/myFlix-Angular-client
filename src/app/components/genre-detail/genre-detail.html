@@ -9,6 +9,9 @@
   <mat-card-footer>
     <mat-card-content class="mat-similar-movies">
       <h3>Movies in this genre:</h3>
+      <div *ngIf="filteredMovies.length === 0" class="empty-message">
+        No movies added yet...
+      </div>
       <ul class="similar-movies-container">
         <li *ngFor="let movie of filteredMovies" class="similar-movie">
           <img [src] = "movie.imagePath" [alt] = "movie.name" class="movie-image">

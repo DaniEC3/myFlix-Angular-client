@@ -1,5 +1,5 @@
 import { Component, Inject, signal, computed } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card'; // ✅ correct import
@@ -16,7 +16,8 @@ import { NgForm } from '@angular/forms';
     MatDialogModule,
     MatButtonModule,
     MatCardModule,
-    NgFor
+    NgFor, 
+    NgIf
   ],
   templateUrl: './genre-detail.html',
   styleUrls: ['./genre-detail.scss']
