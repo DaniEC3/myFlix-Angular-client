@@ -1,0 +1,90 @@
+@use '../../styles/variables' as *;
+
+
+.register-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+
+  .register-mat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: black;
+    color: $primary-light;
+
+    .header-title {
+      font-family: $headers-font;
+    }
+
+
+    .mat-content {
+      display: flex;
+      width: 100%;
+      .mat-form {
+        display: flex;
+        flex-direction: column;
+        margin: 1.2em;
+        justify-content: center;
+        align-self: center;
+
+        .input-form {
+          height: 40px;
+          margin: 10px;
+          width: 100%;
+          font-family: $body-font;
+          // height: 40px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          border-color: gray;
+          border-radius: 10px;
+          outline: none;
+          background-color: black;
+          color: $primary-light;
+          transition: border 0.3s ease, box-shadow 0.3s ease;
+
+          &:focus {
+            border-color: $primary-color;
+            box-shadow: 0 0 0 2px $accent-shadow;
+            border: 2px solid $accent-color;
+          }
+        }
+      }
+
+    }
+
+    .form-button {
+      border: 2px solid;
+      margin-top: 5%;
+      background-color: $primary-light;
+      height: 50px;
+      padding: 0.5rem 1rem;
+      font-size: 1.2em;
+      font-family: $body-font;
+      border-color: $primary-dark;
+      border-radius: 10px;
+      outline: none;
+      color: $primary-dark;
+      font-size: 1.2em;
+      transition:
+        transform 0.2s ease-out,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
+      max-width: 400px;
+
+
+      &:hover {
+        transform: scale(1.05);
+        border-color: $primary-color;
+        box-shadow: 0 6px 12px $accent-shadow;
+        border: 4px solid $accent-color-dark;
+        cursor: pointer;
+        background-color: $accent-color;
+        color: white;
+      }
+    }
+  }
+}
