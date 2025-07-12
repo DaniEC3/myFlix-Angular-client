@@ -1,13 +1,13 @@
 @use '../../styles/variables' as *;
 
 
-.register-wrapper {
+.profile-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: black;
 
-  .register-mat {
+  .profile-mat {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,27 +22,30 @@
 
     .mat-content {
       display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
+
       .mat-form {
         display: flex;
+        justify-content: center;
+        align-items: center;
         flex-direction: column;
         margin: 1.2em;
-        justify-content: center;
-        align-self: center;
 
         .input-form {
+          display: flex;
           height: 40px;
           margin: 10px;
           width: 100%;
           font-family: $body-font;
-          // height: 40px;
           padding: 0.5rem 1rem;
           font-size: 1rem;
           border-color: gray;
           border-radius: 10px;
           outline: none;
           background-color: black;
-          color: $primary-light;
+          color: white;
           transition: border 0.3s ease, box-shadow 0.3s ease;
 
           &:focus {
@@ -86,5 +89,44 @@
         color: white;
       }
     }
+
+    // Buttons
+    .actions-mat {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6em;
+      .delete-button {
+        background-color: $accent-color;
+        color: white;
+        font-weight: bold;
+        font-family: $body-font;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background-color 0.3 ease;
+
+        &:hover {
+          background-color: $accent-color-dark;
+          box-shadow: 0 8px 20px $accent-shadow;
+          animation: scale 0.6s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes scale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
   }
 }

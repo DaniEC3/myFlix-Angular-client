@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 import { Movie } from '../../Interfaces/movie';
 import { Genre } from '../../Interfaces/genre';
@@ -19,7 +20,8 @@ import { SearchService } from '../../services/search.service';
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   templateUrl: './movie-card.html',
   styleUrls: ['./movie-card.scss']

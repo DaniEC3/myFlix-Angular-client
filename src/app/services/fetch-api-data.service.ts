@@ -61,6 +61,20 @@ export class FetchApiDataService {
     );
   }
 
+  // ✅ Get movie data by name
+
+  getMovieByName(name: string): Observable<Movie> {
+    const headers = this.getAuthHeaders();
+    if (!headers) {
+      return throwError(() => new Error('User is not authenticated'));
+    }
+
+    return this.http.get<Movie>(
+      `${apiUrl}movies/${encodeURIComponent(name)}`,
+      { headers }
+    ).pipe(catchError(this.handleError));
+  }
+
   // ✅ Get director by name
 
   getDirectorByName(name: string): Observable<Director> {
@@ -140,7 +154,10 @@ export class FetchApiDataService {
     if (!headers) {
       return throwError(() => new Error('User is not authenticated'));
     }
-    return this.http.put(`${apiUrl}users/update/${username}`, updatedUser, { headers }).pipe(
+    return this.http.put(`${apiUrl}users/update/${username}`, updatedUser, {
+      headers,
+      responseType: 'text' as 'json'
+    }).pipe(
       catchError(this.handleError)
     )
   }
@@ -152,7 +169,10 @@ export class FetchApiDataService {
     if (!headers) {
       return throwError(() => new Error('User is not authenticated'));
     }
-    return this.http.delete(`${apiUrl}users/${userid}`, { headers }).pipe(
+    return this.http.delete(`${apiUrl}users/${userid}`, {
+      headers,
+      responseType: 'text' as 'json'
+    }).pipe(
       catchError(this.handleError)
     );
   }

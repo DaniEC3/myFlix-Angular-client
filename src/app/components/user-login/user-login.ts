@@ -59,6 +59,7 @@ export class UserLoginComponent implements OnInit {
     this.fetchApiData.userLogin(this.credentials).subscribe({
       next: (result) => {
         localStorage.setItem('token',result.token);
+        localStorage.setItem('user',result.user.userName);
         
         this.authService.setToken(result.token)
 

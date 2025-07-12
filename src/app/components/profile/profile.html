@@ -1,7 +1,7 @@
-<div class="register-wrapper">
-  <mat-card class="register-mat">
+<div class="profile-wrapper">
+  <mat-card class="profile-mat">
     <mat-card-header class="header-mat">
-      <mat-card-title class="header-title">Sign Up!</mat-card-title>
+      <mat-card-title class="header-title">User Information!</mat-card-title>
     </mat-card-header>
     <mat-card-content class="mat-content">
       <form class="mat-form">
@@ -13,9 +13,12 @@
         <input class="input-form" matInput [(ngModel)]="userDetails.last_Name" type="text" placeholder="Last Name" name="Last Name">
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button class="form-button"  color="primary">
-        Sign Up
+    <mat-card-actions class="actions-mat">
+      <button class="form-button" (click)="updateUser()" color="primary">
+        Update
+      </button>
+      <button class="delete-button" (click)="openDialog()" color="primary">
+        Delete User
       </button>
     </mat-card-actions>
   </mat-card>
