@@ -110,8 +110,29 @@
             align-items: stretch;
             gap: 0.5rem;
           }
+
+          .add-btn-container {
+            background-color: transparent;
+            border: none;
+            
+          }
+
+          .favorite {
+            color: $accent-color;
+            
+          }
+
+          .not-favorite {
+            color: $primary-color;
+
+            &:hover {
+              color: $accent-color-dark;
+              transition: color 0.3s;
+            }
+          }
+
           mat-icon {
-            &:hover{
+            &:hover {
               cursor: pointer;
             }
           }
@@ -209,7 +230,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-      } 
+      }
     }
 
     img {

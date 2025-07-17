@@ -13,6 +13,8 @@ import { AuthService } from '../../services/auth.service';
 
 import { User } from '../../Interfaces/user';
 
+import { FavoriteMoviesComponent } from '../favorite-movies/favorite-movies';
+
 import { DeleteConfirmationDialog } from '../../dialogs/delete-confirmation.dialog';
 
 
@@ -26,20 +28,22 @@ import { DeleteConfirmationDialog } from '../../dialogs/delete-confirmation.dial
     MatButtonModule,
     FormsModule,
     RouterModule,
-    MatDialogModule
+    MatDialogModule,
+    FavoriteMoviesComponent
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.scss']
 })
 export class ProfileComponent implements OnInit {
 
-  @Input() userDetails: Partial<User> = {
+  userDetails: Partial<User> = {
     userName: '',
     password: '',
     email: '',
     birthDay: '',
     first_Name: '',
-    last_Name: ''
+    last_Name: '',
+    FavoriteMovies: [''],
   };
 
   constructor(
@@ -57,12 +61,14 @@ export class ProfileComponent implements OnInit {
   };
 
   user: string = localStorage.getItem('user') || 'null';
+  favoriteMovies: string[] = []
 
 
   getUserInfo() {
     this.fetchApiData.getUserByName(this.user).subscribe({
       next: (result) => {
         this.userDetails = result;
+        this.favoriteMovies = result.FavoriteMovies ?? [];
       },
       error: (error) => {
         console.log('Error fetching user info:', error)
@@ -113,7 +119,7 @@ export class ProfileComponent implements OnInit {
     }
     this.fetchApiData.editUser(this.user, this.userDetails).subscribe({
       next: (result) => {
-        localStorage.setItem('user',(this.userDetails.userName) || 'null')
+        localStorage.setItem('user', (this.userDetails.userName) || 'null')
         this.snackBar.open('User profile updated successfully!', 'OK', {
           duration: 3000
         });
@@ -124,6 +130,13 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
-
+  removeFromFavorites(userName: string, movieName: string): void {
+    this.fetchApiData.deleteMovieByName(userName, movieName).subscribe({
+      next: () => {
+        this.getUserInfo();
+      },
+      error: (err) => console.error('Error removing favorite:', err)
+    });
+  }
 }
 

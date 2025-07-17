@@ -18,6 +18,16 @@ export class FetchApiDataService {
 
   constructor(private http: HttpClient) { }
 
+
+  // ✅ Headers
+
+  private getAuthHeaders(): HttpHeaders | null {
+    const token = localStorage.getItem('token');
+    return token
+      ? new HttpHeaders({ Authorization: 'Bearer ' + token })
+      : null;
+  }
+
   // ✅ Registers a new user
 
   userRegistration(userDetails: Partial<User>): Observable<User> {
@@ -135,7 +145,7 @@ export class FetchApiDataService {
     )
   }
 
-  // ✅ Add a movie to favourite Movies
+  // ✅ Add a movie to favorite Movies
 
   addMoviebyName(username: string, moviename: string): Observable<any> {
     const headers = this.getAuthHeaders();
@@ -184,18 +194,12 @@ export class FetchApiDataService {
     if (!headers) {
       return throwError(() => new Error('User is not authenticated'));
     }
-    return this.http.delete(`${apiUrl}users/${username}/movies/${moviename}`, { headers }).pipe(
+    return this.http.delete(`${apiUrl}users/${username}/movies/${moviename}`, {
+      headers,
+      responseType: 'text'
+    }).pipe(
       catchError(this.handleError)
     )
-  }
-
-  // ✅ Headers
-
-  private getAuthHeaders(): HttpHeaders | null {
-    const token = localStorage.getItem('token');
-    return token
-      ? new HttpHeaders({ Authorization: 'Bearer ' + token })
-      : null;
   }
 
   // ✅ Generic error handler

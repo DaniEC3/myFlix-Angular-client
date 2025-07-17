@@ -51,6 +51,7 @@ export class MovieCardComponent implements OnInit {
 
     this.getGenres();
     this.getMovies();
+    this.getUserInfo();
 
     this.searchSub = this.searchService.searchTerm$.subscribe(term => {
       this.searchTerm = term;
@@ -61,8 +62,9 @@ export class MovieCardComponent implements OnInit {
   ngOnDestroy(): void {
     this.searchSub?.unsubscribe(); // clean up
   }
-  
 
+  user: string = localStorage.getItem('user') || 'null';
+  favoriteMovies: string[] = []
 
   getGenres(): void {
     this.fetchApiData.getGenres() //	Returns an Observable that will emit the list of movies when the API responds
@@ -113,4 +115,50 @@ export class MovieCardComponent implements OnInit {
       movie.name.toLowerCase().includes(term)
     );
   }
+
+  toggleFavorite(movieId: string, movieName: string): void {
+    if (this.isFavorite(movieId)) {
+      this.fetchApiData.deleteMovieByName(this.user, movieName).subscribe({
+        next: () => {
+          this.favoriteMovies = this.favoriteMovies.filter(id => id !== movieId);
+          console.log("FavoriteMovies", this.favoriteMovies)
+
+        },
+        error: (error) => console.error('Error removing favorite:', error)
+      });
+    } else {
+      this.fetchApiData.addMoviebyName(this.user, movieName).subscribe({
+        next: () => {
+          this.favoriteMovies.push(movieId);
+          console.log("FavoriteMovies", this.favoriteMovies)
+        },
+        error: (error) => console.error('Error adding favorite:', error)
+      });
+    }
+  }
+
+
+  getUserInfo() {
+    this.fetchApiData.getUserByName(this.user).subscribe({
+      next: (result) => {
+        this.favoriteMovies = result?.FavoriteMovies || [];
+      },
+      error: (error) => {
+        console.log('Error fetching user info:', error)
+      }
+    })
+  }
+  isFavorite(movieId: string): boolean {
+    return this.favoriteMovies.includes(movieId);
+  }
+
+  removeFromFavorites(userName: string, movieName: string): void {
+    this.fetchApiData.deleteMovieByName(userName, movieName).subscribe({
+      next: () => {
+        this.getUserInfo();
+      },
+      error: (err) => console.error('Error removing favorite:', err)
+    });
+  }
+
 }

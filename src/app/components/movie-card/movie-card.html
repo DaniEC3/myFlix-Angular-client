@@ -4,7 +4,8 @@
     <div class="movie-grid-cards">
       <mat-card *ngFor="let movie of filteredMovies" class="movies-card">
         <div class="img-wrapper">
-          <img [routerLink]="['/movies', movie.name]" mat-card-image [src]='movie.imagePath' alt="{{movie.name}} poster" *ngIf="movie.imagePath" />
+          <img [routerLink]="['/movies', movie.name]" mat-card-image [src]='movie.imagePath' alt="{{movie.name}} poster"
+            *ngIf="movie.imagePath" />
         </div>
         <div>
           <div class="content-wrapper">
@@ -18,8 +19,13 @@
             </mat-card-content>
 
             <mat-card-actions>
-              <button mat-button class="action-button" color="primary" [routerLink]="['/movies', movie.name]">More Info</button>
-              <mat-icon>favorite_border</mat-icon>
+              <button mat-button class="action-button" color="primary" [routerLink]="['/movies', movie.name]">More
+                Info</button>
+              <button class="add-btn-container" (click)="toggleFavorite(movie._id, movie.name)">
+                <mat-icon [ngClass]="isFavorite(movie._id) ? 'favorite' : 'not-favorite'">
+                  {{ isFavorite(movie._id) ? 'favorite' : 'favorite_border' }}
+                </mat-icon>
+              </button>
             </mat-card-actions>
             <!-- <a *ngSwitchCase="true" class="nav-title" routerLink="/home">MyFlixAngular</a> -->
           </div>
