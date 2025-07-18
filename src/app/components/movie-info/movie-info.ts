@@ -33,6 +33,7 @@ export class MovieInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  this.getGenres()
     this.movieName = this.route.snapshot.paramMap.get('name')!;
     this.fetchApiData.getMovieByName(this.movieName).subscribe({
       next: (data: Movie) => {

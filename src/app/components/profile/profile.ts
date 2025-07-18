@@ -36,16 +36,11 @@ import { DeleteConfirmationDialog } from '../../dialogs/delete-confirmation.dial
 })
 export class ProfileComponent implements OnInit {
 
-  userDetails: Partial<User> = {
-    userName: '',
-    password: '',
-    email: '',
-    birthDay: '',
-    first_Name: '',
-    last_Name: '',
-    FavoriteMovies: [''],
-  };
+  ngOnInit(): void {
+    this.user = localStorage.getItem('user') || '';
+    this.getUserInfo();    
 
+  };
   constructor(
     public fetchApiData: FetchApiDataService,
     private authService: AuthService,
@@ -54,10 +49,14 @@ export class ProfileComponent implements OnInit {
     private dialog: MatDialog,
   ) { }
 
-  ngOnInit(): void {
-    this.user = localStorage.getItem('user') || '';
-    this.getUserInfo();
-
+  userDetails: Partial<User> = {
+    userName: '',
+    password: '',
+    email: '',
+    birthDay: '',
+    first_Name: '',
+    last_Name: '',
+    FavoriteMovies: [''],
   };
 
   user: string = localStorage.getItem('user') || 'null';
@@ -118,7 +117,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.fetchApiData.editUser(this.user, this.userDetails).subscribe({
-      next: (result) => {
+      next: () => {
         localStorage.setItem('user', (this.userDetails.userName) || 'null')
         this.snackBar.open('User profile updated successfully!', 'OK', {
           duration: 3000
@@ -130,6 +129,7 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
+  
   removeFromFavorites(userName: string, movieName: string): void {
     this.fetchApiData.deleteMovieByName(userName, movieName).subscribe({
       next: () => {

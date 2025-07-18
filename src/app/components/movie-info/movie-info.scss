@@ -1,0 +1,106 @@
+@use '../../styles/variables' as *;
+
+.main-content-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.movie-info-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  max-width: 100%;
+}
+
+.movie-grid-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.img-wrapper {
+  flex: 0 0 300px;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .header {
+    margin-bottom: 1rem;
+
+    .title {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .sub-title {
+      font-size: 1rem;
+      color: #ccc;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .description {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .button-container {
+    display: flex;
+    align-items: flex-end;
+
+    .action-button {
+      background-color: $primary-color;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      text-transform: none;
+      font-family: $body-font;
+      font-weight: bold;
+
+      &:hover {
+        background-color: $accent-color;
+        cursor: pointer;
+        animation: scale 0.6s;
+        box-shadow: 0 8px 20px $accent-shadow;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+    }
+
+@keyframes scale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+}

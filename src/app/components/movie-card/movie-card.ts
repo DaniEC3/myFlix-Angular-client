@@ -5,13 +5,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 
 import { Movie } from '../../Interfaces/movie';
 import { Genre } from '../../Interfaces/genre';
 
 import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
+
+import { GenreInformationDialog } from '../../dialogs/genre-information.dialog';
 
 @Component({
   selector: 'app-movie-card',
@@ -21,7 +24,8 @@ import { SearchService } from '../../services/search.service';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ],
   templateUrl: './movie-card.html',
   styleUrls: ['./movie-card.scss']
@@ -31,7 +35,10 @@ export class MovieCardComponent implements OnInit {
   constructor(
     public fetchApiData: FetchApiDataService,
     private authService: AuthService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private dialog: MatDialog,
+    private router: Router,
+
   ) { }
 
   token: string | null = null;
@@ -138,7 +145,7 @@ export class MovieCardComponent implements OnInit {
   }
 
 
-  getUserInfo() {
+  getUserInfo(): void {
     this.fetchApiData.getUserByName(this.user).subscribe({
       next: (result) => {
         this.favoriteMovies = result?.FavoriteMovies || [];
@@ -158,6 +165,18 @@ export class MovieCardComponent implements OnInit {
         this.getUserInfo();
       },
       error: (err) => console.error('Error removing favorite:', err)
+    });
+  }
+
+  genreInfo(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    this.dialog.open(GenreInformationDialog, {
+      position: {
+        top: `${rect.top + window.scrollY}px`,
+        left: `${rect.right + 8}px` // appears slightly to the right of the button
+      },
+      panelClass: 'custom-dialog-panel'
     });
   }
 

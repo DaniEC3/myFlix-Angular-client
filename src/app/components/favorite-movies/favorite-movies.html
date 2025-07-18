@@ -1,21 +1,30 @@
-<!-- <<div *ngIf="favoriteMovies.length > 0; else noFavorites">
-  <div class="favorite-movies-grid">
-    <mat-card *ngFor="let movie of favoriteMovies" class="movie-card" appearance="outlined">
-      <img mat-card-image [src]="movie.imagePath" [alt]="movie.title" />
-      <mat-card-title>{{ movie.title }}</mat-card-title>
-      <mat-card-content>
-        <p>{{ movie.description }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-icon-button color="warn" aria-label="Remove from favorites">
-          <mat-icon>favorite</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div>
+<!-- <ng-container *ngIf="token"> -->
+  <div class="movie-grid">
+    <!-- <div *ngIf="loading">Loading Content...</div> -->
+    <div class="movie-grid-cards">
+      <mat-card *ngFor="let movie of filteredMovies" class="movies-card">
+        <div class="img-wrapper">
+          <img [routerLink]="['/movies', movie.name]" mat-card-image [src]='movie.imagePath' alt="{{movie.name}} poster"
+            *ngIf="movie.imagePath" />
+        </div>
+        <div>
+          <div class="content-wrapper">
+            <mat-card-header class="header">
+              <mat-card-title [routerLink]="['/movies', movie.name]" class="title">{{ movie.name }}</mat-card-title>
+            </mat-card-header>
 
-<ng-template #noFavorites>
-  <p class="no-favorites-message">You have no favorite movies yet.</p>
-</ng-template> -->
-<div>Works</div>
+
+            <mat-card-actions>
+              <button mat-button class="action-button" color="primary" [routerLink]="['/movies', movie.name]">More
+                Info</button>
+              <button class="remove-btn-container" (click)="deleteFavorite(movie.name)">
+                <div>Remove from favorites</div>
+              </button>
+            </mat-card-actions>
+            <!-- <a *ngSwitchCase="true" class="nav-title" routerLink="/home">MyFlixAngular</a> -->
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+<!-- </ng-container> -->
