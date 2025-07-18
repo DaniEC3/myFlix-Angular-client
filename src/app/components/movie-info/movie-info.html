@@ -16,6 +16,13 @@
 
             <mat-card-content>
               <p class="description">{{movie.description}}</p>
+              <div *ngIf="director">
+                <h3>Director</h3>
+                <p><strong>{{ director.name }}</strong></p>
+                <p>{{ director.bio }}</p>
+                <p *ngIf="director.birthYear">Born: {{ director.birthYear | date:'yyyy' }}</p>
+                <p *ngIf="director.deathYear">Died: {{ director.deathYear | date:'yyyy' }}</p>
+              </div>
             </mat-card-content>
 
             <mat-card-actions class="button-container">

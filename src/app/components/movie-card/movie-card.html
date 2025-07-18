@@ -11,7 +11,7 @@
           <div class="content-wrapper">
             <mat-card-header class="header">
               <mat-card-title [routerLink]="['/movies', movie.name]" class="title">{{ movie.name }}</mat-card-title>
-              <mat-card-subtitle class="sub-title" (click)="genreInfo($event)">{{ getGenreInfo(movie.genre) }}</mat-card-subtitle>
+              <mat-card-subtitle class="sub-title" (click)="genreInfo(movie.genre)">{{ getGenreInfo(movie.genre) }}</mat-card-subtitle>
             </mat-card-header>
 
             <mat-card-content>

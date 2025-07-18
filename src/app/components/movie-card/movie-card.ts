@@ -168,16 +168,25 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  genreInfo(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const rect = target.getBoundingClientRect();
+  genreInfo(genreId: string): void {
+    const genre = this.genres.find(g => g._id === genreId);
+
+    if (!genre) {
+      console.warn('Genre not found for ID:', genreId);
+      return;
+    }
+
     this.dialog.open(GenreInformationDialog, {
-      position: {
-        top: `${rect.top + window.scrollY}px`,
-        left: `${rect.right + 8}px` // appears slightly to the right of the button
+      data: {
+        name: genre.name,
+        description: genre.description
       },
-      panelClass: 'custom-dialog-panel'
+      width: '300px'
     });
   }
+
+
+
+
 
 }

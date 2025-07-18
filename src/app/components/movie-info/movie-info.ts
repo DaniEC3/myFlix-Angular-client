@@ -4,9 +4,11 @@ import { FetchApiDataService } from '../../services/fetch-api-data.service';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { Genre } from '../../Interfaces/genre';
 import { Movie } from '../../Interfaces/movie';
+import { Director } from '../../Interfaces/director';
 
 
 
@@ -16,7 +18,8 @@ import { Movie } from '../../Interfaces/movie';
   imports: [
     NgIf,
     MatCardModule,
-    RouterModule
+    RouterModule,
+    DatePipe
   ],
   templateUrl: './movie-info.html',
   styleUrls: ['./movie-info.scss']
@@ -26,6 +29,7 @@ export class MovieInfoComponent implements OnInit {
   movie: Movie | null = null;
   loading: Boolean = true;
   genres: Genre[] = [];
+  director: Director | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,12 +37,22 @@ export class MovieInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  this.getGenres()
+    this.getGenres()
     this.movieName = this.route.snapshot.paramMap.get('name')!;
     this.fetchApiData.getMovieByName(this.movieName).subscribe({
       next: (data: Movie) => {
         this.movie = data
         this.loading = false;
+        // Get director after movie is loaded
+        this.fetchApiData.getDirectors().subscribe({
+          next: (directors: Director[]) => {
+            const match = directors.find(d => d._id === this.movie?.director);
+            if (match) {
+              this.director = match;
+            }
+          },
+          error: (err) => console.error('Error fetching directors:', err)
+        });
       },
       error: (err) => {
         console.error('Failed to fetch movie:', err)
@@ -64,9 +78,9 @@ export class MovieInfoComponent implements OnInit {
   }
 
   getMovieData(): void {
-    this.fetchApiData.getMovieByName(this.movieName) 
-      .subscribe({  
-        next: (movie: Movie) => { 
+    this.fetchApiData.getMovieByName(this.movieName)
+      .subscribe({
+        next: (movie: Movie) => {
           this.movie = movie;
           console.log(this.movie)
         },
@@ -75,7 +89,4 @@ export class MovieInfoComponent implements OnInit {
         }
       });
   }
-
-  
-
 }
