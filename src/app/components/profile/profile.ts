@@ -17,7 +17,10 @@ import { FavoriteMoviesComponent } from '../favorite-movies/favorite-movies';
 
 import { DeleteConfirmationDialog } from '../../dialogs/delete-confirmation.dialog';
 
-
+/**
+ * The ProfileComponent allows a user to view and update their personal profile information.
+ * Users can also delete their account and remove movies from their list of favorites.
+ */
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -36,19 +39,14 @@ import { DeleteConfirmationDialog } from '../../dialogs/delete-confirmation.dial
 })
 export class ProfileComponent implements OnInit {
 
-  ngOnInit(): void {
-    this.user = localStorage.getItem('user') || '';
-    this.getUserInfo();    
+  /**
+   * Stores the current username, retrieved from local storage.
+   */
+  user: string = localStorage.getItem('user') || 'null';
 
-  };
-  constructor(
-    public fetchApiData: FetchApiDataService,
-    private authService: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-  ) { }
-
+  /**
+   * Stores the user's full profile details.
+   */
   userDetails: Partial<User> = {
     userName: '',
     password: '',
@@ -59,32 +57,67 @@ export class ProfileComponent implements OnInit {
     FavoriteMovies: [''],
   };
 
-  user: string = localStorage.getItem('user') || 'null';
-  favoriteMovies: string[] = []
+  /**
+   * List of the user's favorite movie IDs.
+   */
+  favoriteMovies: string[] = [];
 
+  /**
+   * Initializes the component and retrieves user information.
+   */
+  ngOnInit(): void {
+    this.user = localStorage.getItem('user') || '';
+    this.getUserInfo();    
+  }
 
-  getUserInfo() {
+  /**
+   * Constructs the ProfileComponent with injected services.
+   * @param fetchApiData - Service to handle API requests.
+   * @param authService - Service for managing authentication tokens.
+   * @param router - Angular router for navigation.
+   * @param snackBar - Snackbar for user notifications.
+   * @param dialog - Dialog service for confirmation modals.
+   */
+  constructor(
+    public fetchApiData: FetchApiDataService,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) { }
+
+  /**
+   * Retrieves user details and updates local state.
+   */
+  getUserInfo(): void {
     this.fetchApiData.getUserByName(this.user).subscribe({
       next: (result) => {
         this.userDetails = result;
         this.favoriteMovies = result.FavoriteMovies ?? [];
       },
       error: (error) => {
-        console.log('Error fetching user info:', error)
+        console.log('Error fetching user info:', error);
       }
-    })
+    });
   }
 
+  /**
+   * Opens a confirmation dialog before proceeding with user deletion.
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialog);
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.deleteUser()
+        this.deleteUser();
       }
     });
   }
 
+  /**
+   * Deletes the user profile after confirmation.
+   * Clears local storage and navigates back to login.
+   */
   deleteUser(): void {
     if (!this.user) {
       console.error('No user defined to delete.');
@@ -92,44 +125,51 @@ export class ProfileComponent implements OnInit {
     }
 
     this.fetchApiData.deleteUser(this.user).subscribe({
-      next: (result) => {
+      next: () => {
         this.authService.setToken(null);
         localStorage.removeItem('user');
-
-
-        this.snackBar.open(`User Removal Succesfully!`, 'OK', {
+        this.snackBar.open('User Removal Successfully!', 'OK', {
           duration: 2000
         });
         this.router.navigate(['/login']);
       },
       error: (error) => {
-        console.log("Error deleting user:", error);
+        console.log('Error deleting user:', error);
         this.snackBar.open('Failed to delete user. Try again later.', 'OK', {
-          duration: 3000,
+          duration: 3000
         });
       }
-    })
+    });
   }
 
+  /**
+   * Updates the user's profile information via the API.
+   */
   updateUser(): void {
     if (!this.user) {
       console.error('No user defined to update.');
       return;
     }
+
     this.fetchApiData.editUser(this.user, this.userDetails).subscribe({
       next: () => {
-        localStorage.setItem('user', (this.userDetails.userName) || 'null')
+        localStorage.setItem('user', this.userDetails.userName || 'null');
         this.snackBar.open('User profile updated successfully!', 'OK', {
           duration: 3000
         });
         this.user = localStorage.getItem('user') || 'null';
       },
       error: (error) => {
-        console.log("Error updating user:", error)
+        console.log('Error updating user:', error);
       }
-    })
+    });
   }
-  
+
+  /**
+   * Removes a movie from the user's list of favorites.
+   * @param userName - The username of the user.
+   * @param movieName - The name of the movie to remove.
+   */
   removeFromFavorites(userName: string, movieName: string): void {
     this.fetchApiData.deleteMovieByName(userName, movieName).subscribe({
       next: () => {
@@ -139,4 +179,3 @@ export class ProfileComponent implements OnInit {
     });
   }
 }
-

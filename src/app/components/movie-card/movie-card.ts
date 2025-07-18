@@ -16,6 +16,10 @@ import { SearchService } from '../../services/search.service';
 
 import { GenreInformationDialog } from '../../dialogs/genre-information.dialog';
 
+/**
+ * Displays all movies in card format, handles filtering by search term,
+ * favorite management, and genre-related actions.
+ */
 @Component({
   selector: 'app-movie-card',
   standalone: true,
@@ -32,29 +36,75 @@ import { GenreInformationDialog } from '../../dialogs/genre-information.dialog';
 })
 export class MovieCardComponent implements OnInit {
 
+  /**
+   * The user's authentication token.
+   */
+  token: string | null = null;
+
+  /**
+   * The current search term entered by the user.
+   */
+  searchTerm = '';
+
+  /**
+   * Full list of all movies retrieved from the API.
+   */
+  allMovies: Movie[] = [];
+
+  /**
+   * List of movies filtered by search input.
+   */
+  filteredMovies: Movie[] = [];
+
+  /**
+   * List of genres retrieved from the API.
+   */
+  genres: Genre[] = [];
+
+  /**
+   * Indicates whether the movie data is currently loading.
+   */
+  loading: Boolean = true;
+
+  /**
+   * Subscription to search term changes.
+   */
+  private searchSub!: Subscription;
+
+  /**
+   * The current username retrieved from local storage.
+   */
+  user: string = localStorage.getItem('user') || 'null';
+
+  /**
+   * List of favorite movie IDs for the current user.
+   */
+  favoriteMovies: string[] = [];
+
+  /**
+   * Initializes the MovieCardComponent with required services.
+   * @param fetchApiData - Service to access the MyFlix API.
+   * @param authService - Service to manage authentication state.
+   * @param searchService - Service for global search functionality.
+   * @param dialog - Angular Material dialog service.
+   * @param router - Angular Router for navigation.
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     private authService: AuthService,
     private searchService: SearchService,
     private dialog: MatDialog,
-    private router: Router,
-
+    private router: Router
   ) { }
 
-  token: string | null = null;
-
-  searchTerm = '';
-  allMovies: Movie[] = [];
-  filteredMovies: Movie[] = [];
-  genres: Genre[] = [];
-  loading: Boolean = true;
-  private searchSub!: Subscription;
-
+  /**
+   * Angular lifecycle hook that runs after component initialization.
+   * Subscribes to token and search term, and fetches genres, movies, and user info.
+   */
   ngOnInit(): void {
-
     this.authService.token$.subscribe(token => {
       this.token = token;
-    })
+    });
 
     this.getGenres();
     this.getMovies();
@@ -66,44 +116,57 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Unsubscribes from search term observable to prevent memory leaks.
+   */
   ngOnDestroy(): void {
-    this.searchSub?.unsubscribe(); // clean up
+    this.searchSub?.unsubscribe();
   }
 
-  user: string = localStorage.getItem('user') || 'null';
-  favoriteMovies: string[] = []
-
+  /**
+   * Fetches the list of genres from the API.
+   */
   getGenres(): void {
-    this.fetchApiData.getGenres() //	Returns an Observable that will emit the list of movies when the API responds
-      .subscribe({  //	This block runs when the data is successfully received
-        next: (genres: Genre[]) => { // 	This block runs when the data is successfully received
-          this.genres = genres;
-        },
-        error: (err) => {
-          console.log('Error fetching Genres:', err);
-        }
-      });
+    this.fetchApiData.getGenres().subscribe({
+      next: (genres: Genre[]) => {
+        this.genres = genres;
+      },
+      error: (err) => {
+        console.log('Error fetching Genres:', err);
+      }
+    });
   }
 
+  /**
+   * Fetches all movies from the API and initializes the filtered list.
+   */
   getMovies(): void {
-    this.fetchApiData.getAllMovies() //	Returns an Observable that will emit the list of movies when the API responds
-      .subscribe({  //	This block runs when the data is successfully received
-        next: (movies: Movie[]) => { // 	This block runs when the data is successfully received
-          this.allMovies = movies;
-          this.filteredMovies = movies;
-          this.loading = false;
-        },
-        error: (err) => {
-          console.log('Error fetching Movies:', err);
-        }
-      });
+    this.fetchApiData.getAllMovies().subscribe({
+      next: (movies: Movie[]) => {
+        this.allMovies = movies;
+        this.filteredMovies = movies;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.log('Error fetching Movies:', err);
+      }
+    });
   }
 
+  /**
+   * Retrieves the genre name given a genre ID.
+   * @param genreId - The ID of the genre.
+   * @returns The genre name or 'Unknown Genre' if not found.
+   */
   getGenreInfo(genreId: string): string {
     const genre = this.genres.find(genre => genre._id === genreId);
     return genre ? genre.name : 'Unknown Genre';
   }
 
+  /**
+   * Filters the list of movies based on a search term.
+   * @param term - The search term used to filter movies by name.
+   */
   filterMovies(term: string): void {
     if (!term) {
       this.filteredMovies = this.allMovies;
@@ -115,21 +178,29 @@ export class MovieCardComponent implements OnInit {
     );
   }
 
-
-  onSearchChanged(term: string) {
+  /**
+   * Called when the search term is changed.
+   * @param term - The new search term.
+   */
+  onSearchChanged(term: string): void {
     this.searchTerm = term;
     this.filteredMovies = this.allMovies.filter(movie =>
       movie.name.toLowerCase().includes(term)
     );
   }
 
+  /**
+   * Toggles a movie in the user's list of favorites.
+   * Adds or removes it based on whether it is already a favorite.
+   * @param movieId - ID of the movie to toggle.
+   * @param movieName - Name of the movie to toggle.
+   */
   toggleFavorite(movieId: string, movieName: string): void {
     if (this.isFavorite(movieId)) {
       this.fetchApiData.deleteMovieByName(this.user, movieName).subscribe({
         next: () => {
           this.favoriteMovies = this.favoriteMovies.filter(id => id !== movieId);
-          console.log("FavoriteMovies", this.favoriteMovies)
-
+          console.log("FavoriteMovies", this.favoriteMovies);
         },
         error: (error) => console.error('Error removing favorite:', error)
       });
@@ -137,28 +208,41 @@ export class MovieCardComponent implements OnInit {
       this.fetchApiData.addMoviebyName(this.user, movieName).subscribe({
         next: () => {
           this.favoriteMovies.push(movieId);
-          console.log("FavoriteMovies", this.favoriteMovies)
+          console.log("FavoriteMovies", this.favoriteMovies);
         },
         error: (error) => console.error('Error adding favorite:', error)
       });
     }
   }
 
-
+  /**
+   * Retrieves user data and initializes the list of favorite movies.
+   */
   getUserInfo(): void {
     this.fetchApiData.getUserByName(this.user).subscribe({
       next: (result) => {
         this.favoriteMovies = result?.FavoriteMovies || [];
       },
       error: (error) => {
-        console.log('Error fetching user info:', error)
+        console.log('Error fetching user info:', error);
       }
-    })
+    });
   }
+
+  /**
+   * Checks whether a movie is in the user's list of favorites.
+   * @param movieId - ID of the movie.
+   * @returns True if the movie is a favorite, false otherwise.
+   */
   isFavorite(movieId: string): boolean {
     return this.favoriteMovies.includes(movieId);
   }
 
+  /**
+   * Removes a movie from the user's favorites and refreshes user data.
+   * @param userName - Username of the user.
+   * @param movieName - Name of the movie to remove.
+   */
   removeFromFavorites(userName: string, movieName: string): void {
     this.fetchApiData.deleteMovieByName(userName, movieName).subscribe({
       next: () => {
@@ -168,6 +252,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a dialog to show more information about a selected genre.
+   * @param genreId - The ID of the genre to display.
+   */
   genreInfo(genreId: string): void {
     const genre = this.genres.find(g => g._id === genreId);
 
@@ -184,9 +272,5 @@ export class MovieCardComponent implements OnInit {
       width: '300px'
     });
   }
-
-
-
-
 
 }
